@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import { v4 as uuidv4 } from 'uuid';import proyectoContext from './proyectoContext';
 import proyectoReducer from './proyectoReducer';
 //Al ser index.js no se pone el nombre del arachivo a importar
-import { FORMULARIO_PROYECTO, OBTENER_PROYECTO, AGREGAR_PROYECTO ,VALIDAR_FORMULARIO} from '../../types/Index';
+import { FORMULARIO_PROYECTO, OBTENER_PROYECTO, AGREGAR_PROYECTO ,VALIDAR_FORMULARIO,PROYECTO_ACTUAL} from '../../types/Index';
 
 
 const ProyectoState = props => {
@@ -18,6 +18,7 @@ const ProyectoState = props => {
         proyectos : [],
         formulario : false,
         errorformulario:false,
+        proyecto:null
     }
     
 
@@ -57,17 +58,30 @@ const ProyectoState = props => {
             });
        
     };
+    //Selecciona el proyecto que el usuuario haga click
+    const proyectoActual = proyectoId => {
+        dispatch(
+            {type:PROYECTO_ACTUAL,
+            payload: proyectoId
+        }
+        )
+    }
+
+
 
     return (
+        //Pasamos las funciones para utilizarlas donde queramos
         <proyectoContext.Provider
             value={{
                 proyectos: state.proyectos,
                 formulario: state.formulario,
                 errorformulario:state.errorformulario,
+                proyeto: state.proyecto,
                 mostrarFormulario,
                 obtenerProyectos,
                 agregarProyecto,
                 mostrarError,
+                proyectoActual,
                 
             }}
         >
