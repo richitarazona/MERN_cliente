@@ -5,7 +5,8 @@ export default (state, action) => {
         case FORMULARIO_PROYECTO:
         return{
             ...state,
-            formulario:true
+            formulario:true,
+            
         }
         case OBTENER_PROYECTO:  
             return{
@@ -20,6 +21,7 @@ export default (state, action) => {
                 proyectos: [...state.proyectos, action.payload],
                 //Reseteamos
                 formulario : false,
+                errorformulario:false,
             }
             case VALIDAR_FORMULARIO:
                 return {

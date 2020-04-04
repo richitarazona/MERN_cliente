@@ -29,7 +29,7 @@ const NuevoProyecto = () => {
 
         // Validar el proyecto
         if(nombre === '') {
-            // mostrarError();
+             mostrarError();
             return;
         }
 
