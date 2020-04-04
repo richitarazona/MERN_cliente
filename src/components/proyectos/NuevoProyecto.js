@@ -1,77 +1,88 @@
-import React, {Fragment, useState,useContext} from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import proyectoContext from '../../context/proyectos/proyectoContext';
 
+const NuevoProyecto = () => {
 
+    // Obtener el state del formulario
+    const proyectosContext = useContext(proyectoContext);
+    const { formulario, errorformulario,  mostrarFormulario, agregarProyecto, mostrarError } = proyectosContext;
 
-const NuevoProyecto  = () => {
-
-    //Creamos state para formulario
-    const proyectosContext =useContext(proyectoContext);
-    const {formulario, mostrarFormulario} = proyectosContext;
-
-    //Creamos el state para proyecto
-    const [proyecto, GuardarProyecto] = useState({
-        nombre:'',
+    // State para Proyecto
+    const [proyecto, guardarProyecto] = useState({
+        nombre: ''
     });
 
-    //Extraer nombre del proyecto
-    const { nombre } = proyecto;
-    
-    //Leer contenidos del input
+    // Extraer nombre de proyecto
+    const { nombre } = proyecto;
+
+    // Lee los contenidos del input
     const onChangeProyecto = e => {
-        GuardarProyecto({
+        guardarProyecto({
             ...proyecto,
             [e.target.name] : e.target.value
         })
-    };
+    }
 
-    //Cuando el usuario envia un proyecto
+    // Cuando el usuario envia un proyecto
     const onSubmitProyecto = e => {
         e.preventDefault();
-        GuardarProyecto();
 
-        //Validamo proyecto
-        //agregamos si todo estsa ok
-        //Reiniciar el form
-    };
+        // Validar el proyecto
+        if(nombre === '') {
+            // mostrarError();
+            return;
+        }
+
+        // agregar al state
+        agregarProyecto(proyecto);
+
+        // Reiniciar el form
+        guardarProyecto({
+            nombre: ''
+        })
+    }
+
+    // Mostrar el formulario
+    const onClickFormulario = () => {
+        mostrarFormulario();
+    }
 
     return ( 
         <Fragment>
-             <button
-        type="button"
-        onClick={mostrarFormulario}
-        className="btn btn-block btn-primario">
-            Nuevo Proyecto
-        </button>
+            <button 
+                type="button"
+                className="btn btn-block btn-primario"
+                onClick={ onClickFormulario }
+            >Nuevo Proyecto</button>
 
-        { formulario?
-            (
-            <form 
-            className="formulario-nuevo-proyecto"
-            onSubmit={onSubmitProyecto}
-            >
-                <input 
-                type="text" 
-                name="nombre" 
-                className="input-text"
-                onChange={onChangeProyecto}
-                value={nombre}
-                placeholder="Nombre Proyecto"/>
-    
-                <input 
-                type="submit" 
-                value="Agregar Proyecto"
-                className='btn btn-primario btn-block'/>
-            </form>
-        )
-        :null
-        }
+            { formulario ? 
+                    (
+                        <form
+                            className="formulario-nuevo-proyecto"
+                            onSubmit={onSubmitProyecto}
+                        >
+                            <input 
+                                type="text"
+                                className="input-text"
+                                placeholder="Nombre Proyecto"
+                                name="nombre"
+                                value={nombre}
+                                onChange={onChangeProyecto}
+                            />
+
+                            <input 
+                                type="submit"
+                                className="btn btn-primario btn-block"
+                                value="Agregar Proyecto"
+                            />
+
+                        </form>
+                ) : null }
 
 
+            { errorformulario ? <p className="mensaje error">El nombre del Proyecto es obligatorio</p>  : null }
         </Fragment>
-       
-
      );
-};
+}
  
 export default NuevoProyecto;
