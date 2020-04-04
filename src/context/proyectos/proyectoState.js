@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import { v4 as uuidv4 } from 'uuid';import proyectoContext from './proyectoContext';
 import proyectoReducer from './proyectoReducer';
 //Al ser index.js no se pone el nombre del arachivo a importar
-import { FORMULARIO_PROYECTO, OBTENER_PROYECTO, AGREGAR_PROYECTO ,VALIDAR_FORMULARIO,PROYECTO_ACTUAL} from '../../types/Index';
+import { FORMULARIO_PROYECTO, OBTENER_PROYECTO, AGREGAR_PROYECTO ,VALIDAR_FORMULARIO,PROYECTO_ACTUAL,ELIMINAR_PROYECTO} from '../../types/Index';
 
 
 const ProyectoState = props => {
@@ -66,6 +66,14 @@ const ProyectoState = props => {
         }
         )
     }
+    //Elimina un proyecto
+    const eliminaProyecto = proyectoId => {
+        dispatch(
+            {type:ELIMINAR_PROYECTO,
+            payload: proyectoId
+        }
+        )
+    }
 
 
 
@@ -76,12 +84,13 @@ const ProyectoState = props => {
                 proyectos: state.proyectos,
                 formulario: state.formulario,
                 errorformulario:state.errorformulario,
-                proyeto: state.proyecto,
+                proyecto: state.proyecto,
                 mostrarFormulario,
                 obtenerProyectos,
                 agregarProyecto,
                 mostrarError,
                 proyectoActual,
+                eliminaProyecto
                 
             }}
         >
