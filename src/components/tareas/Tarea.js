@@ -1,6 +1,39 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import proyectoContext from '../../context/proyectos/proyectoContext';
+
+import tareaContext from '../../context/tareas/tareaContext';
+
+
+
 
 const Tarea = ({tarea}) => {
+
+
+    //Obtenemos la funcion del context de tarea y tenemos disponibles todas las tareas
+    const tareasContext = useContext(tareaContext);
+    const { eliminarTarea,obtenerTareas,cambiarEstadoTarea} = tareasContext;
+
+    const proyectosContext = useContext(proyectoContext);
+    const { proyecto } = proyectosContext;
+
+    //extraemos el proyecto
+    const [proyectoActual] = proyecto;
+
+    //Funcion que elimina la tarea cuando hace click
+    const tareaEliminar = id => {
+        eliminarTarea(id);
+        obtenerTareas(proyectoActual.id);
+    }
+
+    const cambiarEstado = tarea => {
+        if(tarea.estado) {
+            tarea.estado = false;
+        } else {
+            tarea.estado = true
+        }
+        cambiarEstadoTarea(tarea);
+    }
+
     return ( 
         <li className="tarea sombra">
             <p>{tarea.nombre} </p>
@@ -12,6 +45,7 @@ const Tarea = ({tarea}) => {
                         <button
                             type="button"
                             className="completo"
+                            onClick={() => cambiarEstado(tarea)}
                         >Completo</button>
                     )
                 : 
@@ -19,7 +53,7 @@ const Tarea = ({tarea}) => {
                         <button
                             type="button"
                             className="incompleto"
-                        >Incompleto</button>
+                            onClick={() => cambiarEstado(tarea)}                        >Incompleto</button>
                     )
                 }
             </div>
@@ -32,6 +66,7 @@ const Tarea = ({tarea}) => {
 
                 <button
                     type="button"
+                    onClick={ () => tareaEliminar(tarea.id)}
                     className="btn btn-secundario"
                 >Eliminar</button>
             </div>
