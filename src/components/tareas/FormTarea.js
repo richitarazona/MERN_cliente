@@ -1,5 +1,6 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import proyectoContext from '../../context/proyectos/proyectoContext';
+import tareaContext from '../../context/tareas/tareaContext';
 
 
 const FormTarea = () => {
@@ -7,22 +8,73 @@ const FormTarea = () => {
     const proyectosContext = useContext(proyectoContext);
     const { proyecto } = proyectosContext;
 
-    //Extraer si un proyecto esta aactivo
+    //Obtenemos la funcion del context de tarea y tenemos disponibles todas las tareas
+    const tareasContext = useContext(tareaContext);
+    const { agregarTarea , validarTarea ,errortarea,obtenerTareas} = tareasContext;
 
+    //State del formulario
+    const [tarea, guardarTarea] = useState({
+        nombre:'',
+    });
+
+    //Extraemos el nombre del proyecyo
+    const { nombre } = tarea;
+
+    //Si no hay proyecto seleccionado
     if(!proyecto) return null;
     
     // Array destructuring para extraer el proyecto actual
     const [proyectoActual] =  proyecto;
 
+    //Leemos los valores del foemulario
+    const handleChange = e => {
+        guardarTarea({
+            ...tarea,
+            [e.target.name] : e.target.value,
+        })
+       
+        
+    }
+    
+    
+    //Agregamos las tareas
+    const onSubmit = e => {
+        e.preventDefault();
+
+         //Validamos
+         if(nombre.trim() === '' ) {
+            validarTarea();
+            return;
+        }
+        
+        //agragamos tarea al state
+        tarea.proyectoId = proyectoActual.id;
+        tarea.estado = false;
+        agregarTarea(tarea);
+
+        //obtenemos y filtamos las tareas del proyecto actual
+        obtenerTareas(proyectoActual.id);
+
+        //reiniciamps el fornm
+        guardarTarea({
+           nombre:'',
+        })
+
+    };
+
 
     return ( 
         <div className="formulario">
-            <form>
+            <form
+            onSubmit={onSubmit}
+            >
                 <div className="contenedor-input">
                     <input 
                     type="text"
                      className='input-text'
                      placeholder='Nombre Tarea....'
+                     onChange={handleChange}
+                     value= {nombre}
                      name='nombre'/>
                 </div>
                 >
@@ -32,7 +84,7 @@ const FormTarea = () => {
                     value="Agregar Tarea"
                     className='btn btn-primario btn-submit btn-block'/>
                 </div>
-
+                {errortarea ? <p className="mensaje error">El nombre de la tarea es obligatorio</p> : null }
             </form>
         </div>
      );
