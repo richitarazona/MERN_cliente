@@ -3,7 +3,7 @@ import TareaContext from './tareaContext';
 import TareaReduceer from './tareaReducer';
 
 
-import {TAREAS_PROYECTO,AGREGAR_TAREA,VALIDAR_TAREA,ELIMINAR_TAREA,ESTADO_TAREA } from '../../types/Index';
+import {TAREAS_PROYECTO,AGREGAR_TAREA,VALIDAR_TAREA,ELIMINAR_TAREA,ESTADO_TAREA,TAREA_ACTUAL } from '../../types/Index';
 
 
 
@@ -25,6 +25,7 @@ const TareaState = props => {
     ],
     tareasproyecto : null,
     errortarea : false,
+    tareaSeleccionada : null,
     };
 
 
@@ -68,6 +69,12 @@ const [state, dispatch] = useReducer(TareaReduceer,initialState);
             payload: tarea
         })
     }
+    const guardarTareaActual = tarea => {
+        dispatch({
+            type: TAREA_ACTUAL,
+            payload: tarea
+        })
+    }
     
 
 
@@ -78,11 +85,13 @@ return (
         tareas:state.tareas,
         tareasproyecto : state.tareasproyecto,
         errortarea : state.errortarea,
+        tareaSeleccionada : state.tareaSeleccionada,
         obtenerTareas,
         agregarTarea,
         validarTarea,
         eliminarTarea,
-        cambiarEstadoTarea
+        cambiarEstadoTarea,
+        guardarTareaActual
     }}
     >
         {props.children}

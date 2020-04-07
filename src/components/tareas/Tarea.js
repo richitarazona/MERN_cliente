@@ -11,7 +11,7 @@ const Tarea = ({tarea}) => {
 
     //Obtenemos la funcion del context de tarea y tenemos disponibles todas las tareas
     const tareasContext = useContext(tareaContext);
-    const { eliminarTarea,obtenerTareas,cambiarEstadoTarea} = tareasContext;
+    const { eliminarTarea,obtenerTareas,cambiarEstadoTarea, guardarTareaActual} = tareasContext;
 
     const proyectosContext = useContext(proyectoContext);
     const { proyecto } = proyectosContext;
@@ -33,6 +33,12 @@ const Tarea = ({tarea}) => {
         }
         cambiarEstadoTarea(tarea);
     }
+
+    //Agrega una tarea acatual
+    const seleccionarTarea = tarea => {
+        guardarTareaActual(tarea);
+    }
+
 
     return ( 
         <li className="tarea sombra">
@@ -62,6 +68,7 @@ const Tarea = ({tarea}) => {
                 <button 
                     type="button"
                     className="btn btn-primario"
+                    onClick={() => seleccionarTarea(tarea)}
                 >Editar</button>
 
                 <button
