@@ -46,7 +46,7 @@ export default (state, action) => {
         case TAREA_ACTUAL:
             return {
                 ...state,
-                tareaseleccionada: action.payload
+                tareaSeleccionada: action.payload
             }
         // case LIMPIAR_TAREA:
         //     return {

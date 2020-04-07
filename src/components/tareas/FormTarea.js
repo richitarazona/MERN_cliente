@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState,useEffect} from 'react';
 import proyectoContext from '../../context/proyectos/proyectoContext';
 import tareaContext from '../../context/tareas/tareaContext';
 
@@ -10,7 +10,19 @@ const FormTarea = () => {
 
     //Obtenemos la funcion del context de tarea y tenemos disponibles todas las tareas
     const tareasContext = useContext(tareaContext);
-    const { agregarTarea , validarTarea ,errortarea,obtenerTareas} = tareasContext;
+    const { tareaSeleccionada,agregarTarea , validarTarea ,errortarea,obtenerTareas} = tareasContext;
+
+    //Effect que detecta si hay una tarea seleccionada
+
+    useEffect(() => {
+       if(tareaSeleccionada !== null){
+           guardarTarea(tareaSeleccionada)
+       }else{
+           guardarTarea({
+               nombre:''
+           })
+       }
+    }, [tareaSeleccionada])
 
     //State del formulario
     const [tarea, guardarTarea] = useState({
@@ -81,7 +93,8 @@ const FormTarea = () => {
                 <div className="contenedor-input">
                     <input 
                     type="submit" 
-                    value="Agregar Tarea"
+                    
+                    value={tareaSeleccionada ? 'Editar Tarea' : 'Agregar Tarea'}
                     className='btn btn-primario btn-submit btn-block'/>
                 </div>
                 {errortarea ? <p className="mensaje error">El nombre de la tarea es obligatorio</p> : null }
