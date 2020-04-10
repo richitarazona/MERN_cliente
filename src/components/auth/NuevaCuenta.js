@@ -10,19 +10,20 @@ const NuevaCuenta = (props) => {
     const { alerta, mostrarAlerta } = alertaContext;
 
     const authContext = useContext(AuthContext);
-    const { registrarUsuario } = authContext;
+    const { mensaje, autenticado, registrarUsuario } = authContext;
 
     // En caso de que el usuario se haya autenticado o registrado o sea un registro duplicado
-    // useEffect(() => {
-    //     if(autenticado) {
-    //         props.history.push('/proyectos');
-    //     }
-
-    //     if(mensaje) {
-    //         mostrarAlerta(mensaje.msg, mensaje.categoria);
-    //     }
-    //     // eslint-disable-next-line
-    // }, [mensaje, autenticado, props.history]);
+        useEffect(() => {
+            if(autenticado) {
+                //nos lleva al componente proyectos
+                props.history.push('/proyectos');
+            }
+            //Si ya esta autenficicado 
+            if(mensaje) {
+                mostrarAlerta(mensaje.msg, mensaje.categoria);
+            }
+            // eslint-disable-next-line
+        }, [mensaje, autenticado, props.history]);
 
     // State para iniciar sesión
     const [usuario, guardarUsuario] = useState({

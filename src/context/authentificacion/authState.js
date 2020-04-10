@@ -45,7 +45,7 @@ const AuthState = props => {
             console.log(error.response.data.msg);
             const alerta = {
                 msg:error.response.data.msg,
-                categoria: 'alert-error'
+                categoria: 'alerta-error'
             }
 
             dispatch({
