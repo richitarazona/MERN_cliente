@@ -16,7 +16,7 @@ export default (state, action) => {
             localStorage.setItem('token',action.payload.token);
             return{
                 ...state,
-                autenticado : null,
+                autenticado:true,
                 mensaje: null,
             }
         case REGISTRO_ERROR:

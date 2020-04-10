@@ -1,8 +1,9 @@
 import React, { useReducer } from 'react';
 import AuthContext from './authContext';
 import AuthReducer from './authReducer';
+import axios from 'axios';
 
-import clienteAxios from '../../config/axios';
+// import clienteAxios from '../../config/axios';
 // import tokenAuth from '../../config/token';
 
 import { 
@@ -30,7 +31,7 @@ const AuthState = props => {
        
         try {
             //Hacemos una peticion  POST a nuestra url/api/usuarios y le enviamos 'datos'
-            const respuesta = await clienteAxios.post('/api/usuarios', datos);
+            const respuesta = await axios.post('http://localhost:4000/api/usuarios', datos);
             console.log(respuesta);
             //respuesta.data en el token
             console.log(respuesta.data);
@@ -40,10 +41,16 @@ const AuthState = props => {
             })
 
         } catch (error) {
-            console.log(error);
+            //Accedemos a los errores de axios
+            console.log(error.response.data.msg);
+            const alerta = {
+                msg:error.response.data.msg,
+                categoria: 'alert-error'
+            }
 
             dispatch({
-                type: REGISTRO_ERROR
+                type: REGISTRO_ERROR,
+                payload:alerta
             })
 
         }
