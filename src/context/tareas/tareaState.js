@@ -1,6 +1,6 @@
 import React, {useReducer} from 'react';
 import TareaContext from './tareaContext';
-import TareaReduceer from './tareaReducer';
+import TareaReducer from './tareaReducer';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -32,7 +32,7 @@ const TareaState = props => {
 
     //creamos el didpacht y el state
 
-const [state, dispatch] = useReducer(TareaReduceer,initialState);
+const [state, dispatch] = useReducer(TareaReducer,initialState);
 
     //Creamos los funciones
 

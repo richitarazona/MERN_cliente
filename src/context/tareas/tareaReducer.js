@@ -1,28 +1,28 @@
 import { 
     TAREAS_PROYECTO,
-    AGREGAR_TAREA,
-     VALIDAR_TAREA,
-     ELIMINAR_TAREA,
-     ESTADO_TAREA,
-     TAREA_ACTUAL,
-     ACTUALIZAR_TAREA,
-    LIMPIAR_TAREA
+        AGREGAR_TAREA,
+        VALIDAR_TAREA,
+        ELIMINAR_TAREA,
+        ESTADO_TAREA,
+        TAREA_ACTUAL,
+        ACTUALIZAR_TAREA,
+        LIMPIAR_TAREA
 } from '../../types/Index';
 
-export default (state, action) => {
-    switch(action.type) {
-        case TAREAS_PROYECTO:
-            return {
-                ...state,
-                tareasproyecto: state.tareas.filter(tarea => tarea.proyectoId === action.payload)
-            }
-            case AGREGAR_TAREA:
+    export default (state, action) => {
+        switch(action.type) {
+            case TAREAS_PROYECTO:
                 return {
                     ...state,
-                    //Lo ponemos al reves para añadir la tarea al inicio
-                    tareas: [ action.payload,...state.tareas],
-                    errortarea:false,
+                    tareasproyecto: state.tareas.filter(tarea => tarea.proyectoId === action.payload)
                 }
+                case AGREGAR_TAREA:
+                    return {
+                        ...state,
+                        //Lo ponemos al reves para añadir la tarea al inicio
+                        tareas: [ action.payload,...state.tareas],
+                        errortarea:false,
+                    }
         case VALIDAR_TAREA:
             return {
                 ...state,
